@@ -48,6 +48,8 @@ function ready(error, us, education) {
     tooltip.style("opacity", 0);
   };
 
+  const increaseScale = `scale(1.82, 1.62)`;
+
   svg
     .append("g")
     .attr("class", "counties")
@@ -55,6 +57,7 @@ function ready(error, us, education) {
     .data(topojson.feature(us, us.objects.counties).features)
     .enter()
     .append("path")
+    .attr("transform", increaseScale)
     .attr("class", "county")
     .attr("data-fips", (d) => d.id)
     .attr("data-education", (d) => filterEducationByCountyId(d.id)[0].bachelorsOrHigher)
@@ -74,14 +77,25 @@ function ready(error, us, education) {
       })
     )
     .attr("class", "states")
+    .attr("transform", increaseScale)
     .attr("d", path);
 
+  svg
+    .append("path")
+    .datum(
+      topojson.mesh(us, us.objects.counties, (a, b) => {
+        return a !== b;
+      })
+    )
+    .attr("class", "counties")
+    .attr("transform", increaseScale)
+    .attr("d", path);
   // ===========================================================================
   // Legend
   // ===========================================================================
   const scale = d3.scaleLinear().domain([2.6, 75.1]).rangeRound([600, 960]);
 
-  const legend = svg.append("g").attr("class", "key").attr("id", "legend").attr("transform", "translate(-100,615)");
+  const legend = svg.append("g").attr("class", "key").attr("id", "legend").attr("transform", "translate(400,915)");
 
   legend
     .selectAll("rect")
@@ -105,9 +119,6 @@ function ready(error, us, education) {
     .attr("class", "caption")
     .attr("x", scale.range()[0])
     .attr("y", -6)
-    .attr("fill", "#000")
-    .attr("text-anchor", "start")
-    .attr("font-weight", "bold")
     .text("Percentage of population with a degree");
 
   legend
