@@ -27,7 +27,6 @@ body {
   align-items: center;
   justify-content: center;
   font-family: "Inter";
-  background-color: var(--ivory);
   background-size: 64px 128px;
 }
 
@@ -36,12 +35,20 @@ body {
   stroke: 1px solid var(--orange-yellow-crayola);
 }
 
+.caption {
+  fill: #000;
+  text-anchor: start;
+  font-family: 400;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 svg {
   display: flex;
   margin: auto;
   font-family: "Inter", sans-serif;
-  background-color: var(--ivory);
   border-radius: 5px;
+  /* border: 5px solid black; */
 }
 
 h1 {
@@ -79,10 +86,13 @@ h2 {
 
 .counties {
   fill: none;
+  stroke: var(--ivory);
+  stroke-width: 0.3px;
 }
 
 .states {
   fill: none;
   stroke: var(--ivory);
+  stroke-width: 1.5px;
   stroke-linejoin: round;
 }
